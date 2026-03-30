@@ -1,3 +1,47 @@
+let musica = null;
+let musica2 = null;
+
+function iniciarMusicaFundo() {
+    if (!musica) {
+        return;
+    }
+
+    musica.volume = 1;
+    musica.playsInline = true;
+    musica.setAttribute("playsinline", "");
+    musica.setAttribute("webkit-playsinline", "");
+
+    const tentativa = musica.play();
+    if (tentativa && typeof tentativa.catch === "function") {
+        tentativa.catch(() => {
+            // Em Safari/mobile, o autoplay pode ser bloqueado sem gesto do usuario.
+        });
+    }
+}
+
+function desbloquearAudioNaPrimeiraInteracao() {
+    const eventos = ["touchstart", "click", "keydown"];
+
+    const handler = () => {
+        iniciarMusicaFundo();
+        eventos.forEach((evento) => {
+            document.removeEventListener(evento, handler, true);
+        });
+    };
+
+    eventos.forEach((evento) => {
+        document.addEventListener(evento, handler, { passive: true, capture: true, once: true });
+    });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    musica = document.getElementById("musica");
+    musica2 = document.getElementById("musica2");
+
+    iniciarMusicaFundo();
+    desbloquearAudioNaPrimeiraInteracao();
+});
+
 function inserir(valor) {
     var valor1 = document.getElementById("campo1").value;
     var valor2 = document.getElementById("campo2").value;
@@ -23,7 +67,9 @@ function votar() {
         
     }
     alert("Confirmado o voto no candidato "+candidado)
-    musica2.play()
+    if (musica2) {
+        musica2.play();
+    }
     document.getElementById("campo1").value = "";
     document.getElementById("campo2").value = "";
     document.getElementById("candidato").innerHTML = "";
@@ -52,7 +98,9 @@ function branco() {
         sessionStorage.setItem(branco, 1);
     }
     alert("Você votou em branco! ")
-    musica2.play()
+    if (musica2) {
+        musica2.play();
+    }
     document.getElementById("campo1").value = "";
     document.getElementById("campo2").value = "";
 }

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div><a href="resultado.html">Resultado Parcial</a></div>
+    <div><a class="resultado-btn" href="resultado.html">Resultado Parcial</a></div>
     
     <div class="container">
             <div class="result">
@@ -57,12 +57,6 @@
     
 </body>
 <script src="./code.js"></script>
-<audio id="musica" src="./sounds/theme1.mp3" preload="auto">
-    <audio id="musica2" src="./audio/confirma.mp3" preload="auto"> 
-        <script >let html = document.querySelector("html");
-        let musica = document.querySelector("#musica");
-        html.addEventListener('click', () => {
-        musica.play();
-        })
-      </script>
+<audio id="musica" src="./audio/hino.mp3" preload="auto" loop></audio>
+<audio id="musica2" src="./audio/confirma.mp3" preload="auto"></audio>
 </html>
